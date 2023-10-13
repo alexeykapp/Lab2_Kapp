@@ -1,0 +1,163 @@
+using Registration;
+using NUnit.Framework;
+
+namespace TestProject
+{
+    public class Tests
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [TestCase("user", "Password123", "Password123", false, "Логин слишком короткий.")]
+        public void Test_ValidateUserRegistration_ShortLogin(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+
+        [TestCase("user1", "Password123", "Password123", false, "Логин уже существует.")]
+        public void Test_ValidateUserRegistration_ExistingLogin(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("user122", "Password123", "Password123", false, "Логин не соответствует формату телефона или электронной почты.")]
+        public void Test3(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "Password122", "Password123", false, "Пароль и подтверждение пароля не совпадают.")]
+        public void Test4(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "Pass", "Pass", false, "Пароль слишком короткий.")]
+        public void Test5(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "ФЫФлваDылао1!", "ФЫФлваDылао1!", false, "Пароль должен содержать только кириллические символы.")]
+        public void Test6(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "SФЫФлваылао1р!", "SФЫФлваылао1р!", false, "Пароль должен содержать только кириллические символы.")]
+        public void Test7(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "ФЫФВВЫВЫЫВЫ1!", "ФЫФВВЫВЫЫВЫ1!", false, "Пароль не содержит буквы в нижнем регистре.")]
+        public void Test8(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "выыворорвы1!", "выыворорвы1!", false, "Пароль не содержит буквы в верхнем регистре.")]
+        public void Test9(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "Фвыыворорвы!", "Фвыыворорвы!", false, "Пароль не содержит цифры.")]
+        public void Test10(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "Фвыыворорвы1", "Фвыыворорвы1", false, "Пароль не содержит спецсимвола.")]
+        public void Test11(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("", "Фвыыворорвы1", "Фвыыворорвы1", false, "Логин не может быть пустым.")]
+        public void Test12(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "", "Фвыыворорвы1", false, "Пароль не может быть пустым.")]
+        public void Test13(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "Фвыыворорвы1", "", false, "Подтверждение пароля не может быть пустым.")]
+        public void Test14(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahaj hj@ssd.csd", "Фвыыворорвы1", "", false, "Логин не может содержать пробелы.")]
+        public void Test15(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "", "", false, "Пароль не может быть пустым.")]
+        public void Test16(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+       
+        [TestCase("", "", "", false, "Логин не может быть пустым.")]
+        public void Test17(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("ahajhj@ssd.csd", "Пароль121!", "Пароль121!", true, "")]
+        public void Test18(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("123-456-7890", "фВвыыворорвы1!", "фВвыыворорвы1!", false, "Логин не соответствует формату телефона или электронной почты.")]
+        public void Test19(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase("user name", "password", "password", false, "Логин не может содержать пробелы.")]
+        public void Test20(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+        [TestCase(" username", "password", "password", false, "Логин не может содержать пробелы.")]
+        public void Test21(string login, string password, string confirmPassword, bool expectedSuccess, string expectedMessage)
+        {
+            var result = RegistrationService.ValidateUserRegistration(login, password, confirmPassword);
+            Assert.AreEqual(expectedSuccess, result.Item1);
+            Assert.AreEqual(expectedMessage, result.Item2);
+        }
+    }
+}
