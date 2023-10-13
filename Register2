@@ -1,0 +1,49 @@
+using NUnit.Framework;
+using Microsoft.Win32;
+using Lab2_login_;
+namespace TestProject1
+{
+    public class Tests
+    {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
+        [TestFixture]
+        public class RegisterTests
+        {
+            [TestCase("", "Password123", "Password123", "False", "Пустая строка в качестве логина")]
+            [TestCase("user11", "Password123", "Password123", "False", "Пользователь с таким логином уже зарегистрирован")]
+            [TestCase("user_11", "", "", "False", "Пустая строка в качестве пароля")]
+            [TestCase("gfs", "", "", "False", "Длина логина меньше 5 символов")]
+            [TestCase("user11", "", "", "False", "Пользователь с таким логином уже зарегистрирован")]
+            [TestCase("?*:%;№К%:?*()(*?:%", "", "", "False", "Логин содержит символы, отличные от латиницы, цифр и знака подчеркивания")]
+            [TestCase("user_11", "Пар1", "Пар1", "False", "Длина пароля меньше 7 символов")]
+            [TestCase("user@sd", "", "Пароль2112", "False", "Пустая строка в качестве пароля")]
+            [TestCase("newuser", "Пароль", "Пароль", "False", "Логин содержит символы, отличные от латиницы, цифр и знака подчеркивания")]
+            [TestCase("user_11", "Password", "Password", "False", "В пароле присутствуют недопустимые символы")]
+            [TestCase("dggfdfdf", "dsdsd", "", "False", "Длина пароля меньше 7 символов")]
+            [TestCase("asasasas", "ВВВВВВВВВВ2_", "ВВВВВВВВВВ2_", "False", "В пароле отсутствует минимум одна строчная буква")]
+            [TestCase("abc", "Password123", "Password123", "False", "Длина логина меньше 5 символов")]
+            [TestCase("asasasas", "ВВВВВВВВВВ2_", "ВВВВВВВВВВ2_", "False", "В пароле отсутствует минимум одна строчная буква")]
+            [TestCase("user_11", "Passw0rd", "Passw0rd", "False", "В пароле присутствуют недопустимые символы")]
+            [TestCase("user11", "Пароль!", "Пароль!", "False", "Пользователь с таким логином уже зарегистрирован")]
+            [TestCase("+123-456-789", "Пароль!", "Пароль!", "False", "Номер телефона не удовлетворяет заданному формату +x-xxx-xxx-xxxx")]
+            [TestCase("user_11", "ПАРОЛЬ11", "ПАРОЛЬ11", "False", "В пароле отсутствует минимум одна строчная буква")]
+            [TestCase("user11", "Password123", "Password123", "False", "Пользователь с таким логином уже зарегистрирован")]
+            [TestCase("user_11", "пароль1", "пароль1", "False", "В пароле отсутствует минимум одна заглавная буква")]
+            [TestCase("fdfdsfsd", "", "", "False", "Пустая строка в качестве пароля")]
+            [TestCase("user11", "Password123", "Password123", "False", "Пользователь с таким логином уже зарегистрирован")]
+            [TestCase("user_11", "ПАРОЛЬ11", "ПАРОЛЬ11", "False", "В пароле отсутствует минимум одна строчная буква")]
+
+            public void CheckRegisterTest(string login, string password, string password2, string expectedResult, string expectedMessage)
+            {
+                Register register = new Register();
+                var result = register.CheckRegister(login, password, password2);
+                Assert.AreEqual(expectedResult, result.Item1);
+                Assert.AreEqual(expectedMessage, result.Item2);
+            }
+        }
+    }
+}
