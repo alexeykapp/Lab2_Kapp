@@ -1,0 +1,181 @@
+using TestTriangle;
+namespace TestProject1
+{
+    public class Tests
+    {
+        [TestCase("2", "2", "4")]
+        [TestCase("1", "2", "3")]
+        public void notAtriangle(string a, string b, string c)
+        {
+
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (-1, -1), (-1, -1), (-1, -1) };
+            var expect = ("не треугольник", points);
+
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("1", "2", "c")]
+        [TestCase("-3,2", "3,2", "3,2")]
+        public void Test(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (-2, -2), (-2, -2), (-2, -2) };
+            var expect = ("", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+
+        [Test]
+        public void Equilateral1()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (48, 0), (23, 41) };
+            var expect = ("равносторонний", points);
+            var actual = Triangle.GetTriangleInfo("48", "48", "48");
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("4,5", "4,5", "4.5")]
+        [TestCase("4.5", "4,5", "4,5")]
+        public void Equilateral1(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (4, 0), (2, 3) };
+            var expect = ("равносторонний", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+
+        [Test]
+        public void Isosceles9()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (3, 0), (1, 4) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo("5", "5", "3");
+            Assert.AreEqual(expect, actual);
+        }
+
+
+        [Test]
+        public void Isosceles8()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (5, 0), (0, 2) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo("5", "3", "5");
+            Assert.AreEqual(expect, actual);
+        }
+
+
+        [Test]
+        public void Isosceles7()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (5, 0), (4, 2) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo("3", "5", "5");
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("3,5", "5,5", "5,5")]
+        [TestCase("3,5", "5,5", "5.5")]
+        public void Isosceles6(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (5, 0), (4, 3) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("5.5", "3,5", "5,5")]
+        [TestCase("5,5", "3.5", "5,5")]
+        [TestCase("5,5", "3,5", "5.5")]
+        public void Isosceles11(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (5, 0), (1, 3) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+        [TestCase("5.5", "5,5", "3,5")]
+        [TestCase("5,5", "5,5", "3.5")]
+        [TestCase("5,5", "5.5", "3,5")]
+        public void Isosceles10(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (3, 0), (1, 5) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+
+        [Test]
+        public void Versatile2()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (90, 0), (100, 91) };
+            var expect = ("разносторонний", points);
+            var actual = Triangle.GetTriangleInfo("400", "588", "390");
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("780,56", "678,78", "670,90")]
+        [TestCase("780,56", "678,78", "670.90")]
+        [TestCase("780.56", "678.78", "670.90")]
+        public void Versatile1(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (100, 0), (33, 95) };
+            var expect = ("разносторонний", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+
+        [Test]
+        public void Equilateral2()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (100, 0), (49, 86) };
+            var expect = ("равносторонний", points);
+            var actual = Triangle.GetTriangleInfo("400", "400", "400");
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("350.6", "350,6", "234,56")]
+        [TestCase("350.6", "350.6", "234.56")]
+        public void Isosceles3(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (70, 0), (35, 100) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+
+        [Test]
+        public void Isosceles2()
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (100, 0), (52, 87) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo("390", "400", "390");
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestCase("5,5", "7,2", "5,5")]
+        public void Isosceles1(string a, string b, string c)
+        {
+            List<(int, int)> points = new List<(int, int)>();
+            points = new List<(int, int)> { (0, 0), (5, 0), (4, 5) };
+            var expect = ("равнобедренный", points);
+            var actual = Triangle.GetTriangleInfo(a, b, c);
+            Assert.AreEqual(expect, actual);
+        }
+    }
+}
